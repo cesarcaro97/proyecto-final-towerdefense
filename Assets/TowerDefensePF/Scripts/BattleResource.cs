@@ -13,16 +13,31 @@ public class BattleResource : ScriptableObject
     private int cost = 0;
     [SerializeField]
     private BattleResourceType resourceType = BattleResourceType.Unit;
+    [SerializeField]
+    private TileCode tileCode = TileCode.Free;
 
-    public string Name { get => name; set => name = value; }
-    public Sprite Icon { get => icon; set => icon = value; }
-    public int Cost { get => cost; set => cost = value; }
-    public BattleResourceType ResourceType { get => resourceType; set => resourceType = value; }
+    public string Name  => name; 
+    public Sprite Icon  => icon;
+    public int Cost => cost;
+    public TileCode TileCode  => tileCode;
+    public BattleResourceType ResourceType => resourceType;
 }
 
 public enum BattleResourceType : byte
 {
-    Unit = 254,
-    Turret = 253,
-    Wall = 252
+    Unit = 0,
+    Turret = 1,
+    Wall = 2
+}
+
+public enum TileCode
+{
+    Free = 0,
+    Unit_Solider_A = 1,
+    Unit_Soldier_D = 2,
+    Unit_Hero = 3,
+    Turret_T1 = 4,
+    Turret_T2 = 5,
+    Wall_Rock = 6,
+    Wall_Concrete = 7,
 }

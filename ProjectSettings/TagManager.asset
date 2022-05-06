@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background Tile
+    uniqueID: 3816903469
+    locked: 0
+  - name: Design Placeholder
+    uniqueID: 64948035
+    locked: 0
+  - name: TileCode
+    uniqueID: 1999076181
+    locked: 0
