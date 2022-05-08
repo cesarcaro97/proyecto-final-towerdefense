@@ -40,3 +40,15 @@ public class PlacementTile : MonoBehaviour
         }
     }
 }
+public enum TileCode
+{
+    Free = 0,
+    Unit_Solider_A = 1,
+    Unit_Soldier_D = 2,
+    Unit_Hero = 3,
+    Turret_T1 = 4,
+    Turret_T2 = 5,
+    Wall_Rock = 6,
+    Wall_Concrete = 7,
+    Core = 8
+}

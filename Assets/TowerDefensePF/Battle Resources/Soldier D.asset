@@ -10,10 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7c9610f7fecfe64fb4b0ef6e6ba732e, type: 3}
-  m_Name: Soldier A
+  m_Name: Soldier D
   m_EditorClassIdentifier: 
-  _name: Soldier A
-  icon: {fileID: 21300000, guid: 4eaf934a469cf904abab09511937e638, type: 3}
+  _name: Soldier D
+  description: A soldier focused on defending territory.
+  statsInfo:
+  - name: Life
+    points: 30
+  - name: Speed
+    points: 5
+  - name: Atack
+    points: 2
+  icon: {fileID: 21300000, guid: e5cd3a0600f39d44a8a97db77629db9e, type: 3}
   cost: 10
   resourceType: 0
-  tileCode: 1
+  tileCode: 2

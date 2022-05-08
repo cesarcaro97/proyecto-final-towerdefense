@@ -8,10 +8,11 @@ public class DesignUI : MonoBehaviour
 {
     [SerializeField] DesignTabsUI designTabs = null;
     [SerializeField] TMP_Text budgetText = null;
+    [SerializeField] TMP_Text playerText = null;
+    
 
-    public void Init(int budget, BattleResource[] battleResources)
+    public void Init(BattleResource[] battleResources)
     {
-        SetBudgetText(budget);
         foreach (var r in battleResources)
         {
             designTabs.AddResource(r);
@@ -21,5 +22,14 @@ public class DesignUI : MonoBehaviour
     public void SetBudgetText(int budget)
     {
         budgetText.text = budget.ToString();
+    }
+    public void SetPlayerText(string player)
+    {
+        playerText.text = $"{player} Design";
+    }
+
+    public void OnReady_ButtonClick()
+    {
+        DesignManager.Instance.Ready();
     }
 }

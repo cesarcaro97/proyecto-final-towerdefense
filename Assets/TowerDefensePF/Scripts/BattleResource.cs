@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,11 @@ public class BattleResource : ScriptableObject
     [SerializeField]
     private string _name = string.Empty;
     [SerializeField]
+    [TextArea(4, 6)]
+    private string description;
+    [SerializeField]
+    Stat[] statsInfo = null;
+    [SerializeField]
     private Sprite icon = null;
     [SerializeField]
     private int cost = 0;
@@ -16,7 +22,13 @@ public class BattleResource : ScriptableObject
     [SerializeField]
     private TileCode tileCode = TileCode.Free;
 
-    public string Name  => name; 
+    public string Name  => _name;
+    public string Description => description;
+    public Stat[] StatsInfo => statsInfo;
+    public string TooltipInfo => $"{Name}{Environment.NewLine}{Environment.NewLine}" +
+                                $"{Description}{Environment.NewLine}{Environment.NewLine}" +
+                                $"Stats{Environment.NewLine}" +
+                                $"{string.Join<Stat>(Environment.NewLine, statsInfo)}";
     public Sprite Icon  => icon;
     public int Cost => cost;
     public TileCode TileCode  => tileCode;
@@ -30,14 +42,19 @@ public enum BattleResourceType : byte
     Wall = 2
 }
 
-public enum TileCode
+[Serializable]
+public class Stat
 {
-    Free = 0,
-    Unit_Solider_A = 1,
-    Unit_Soldier_D = 2,
-    Unit_Hero = 3,
-    Turret_T1 = 4,
-    Turret_T2 = 5,
-    Wall_Rock = 6,
-    Wall_Concrete = 7,
+    [SerializeField]
+    private string name = string.Empty;
+    [SerializeField]
+    private int points = 0;
+
+    public int Points => points;
+    public string Name => name;
+
+    public override string ToString()
+    {
+        return $"{name}: {points}";
+    }
 }

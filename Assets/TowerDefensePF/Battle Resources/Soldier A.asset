@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7c9610f7fecfe64fb4b0ef6e6ba732e, type: 3}
+  m_Name: Soldier A
+  m_EditorClassIdentifier: 
+  _name: Soldier A
+  description: Unit focused on destroying enemy defenses first.
+  statsInfo:
+  - name: Life
+    points: 10
+  - name: Speed
+    points: 5
+  - name: Attack
+    points: 4
+  icon: {fileID: 21300000, guid: 4eaf934a469cf904abab09511937e638, type: 3}
+  cost: 10
+  resourceType: 0
+  tileCode: 1

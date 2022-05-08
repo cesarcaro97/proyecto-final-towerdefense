@@ -6,17 +6,22 @@ using UnityEngine;
 public class DesignManager : MonoBehaviour
 {
     public static DesignManager Instance { get; private set; } = null;
-
-
+    
+    public string[] players = null;
+    [SerializeField] GameObject corePrefab = null;
     [SerializeField] BattleResource[] battleResources = null;
     [SerializeField] GameObject placeHolderPrefab = null;
 
     [SerializeField] DesignUI designUI = null;
 
-    int budget = 0;
-    int zoneWidth = 0;
-    int zoneHeight = 0;
-    string[,] battleZoneInfo = null;
+    GameObject placeHoldersParent = null;
+    GameObject tilesPlacedParent = null;
+    GameConfig currentConfig = null;
+    int currentBudget = 0;
+    int currentZoneWidth = 0;
+    int currentzoneHeight = 0;
+    private int currentPlayerIndex = -1;
+    Dictionary<string, string[,]> playersZoneInfo = null;
 
     private void Awake()
     {
@@ -34,38 +39,63 @@ public class DesignManager : MonoBehaviour
 
     internal void RemovePlacedTile(Vector3 position, int cost)
     {
-        budget += cost;
-        designUI.SetBudgetText(budget);
+        currentBudget += cost;
+        designUI.SetBudgetText(currentBudget);
 
         int x = Mathf.FloorToInt(position.x);
         int y = Mathf.CeilToInt(position.y);
 
-        battleZoneInfo[x, y] = ((int)TileCode.Free).ToString();
+        playersZoneInfo[players[currentPlayerIndex]][x, y] = ((int)TileCode.Free).ToString();
     }
 
     private void Start()
     {
-        SetUpBattleZone(8, 8, 1000, battleResources);
+        SetupDesign(GameConfig.Instance, battleResources);
     }
 
-    public void SetUpBattleZone(int width, int height, int budget, BattleResource[] resources)
+    public void SetupDesign(GameConfig config, BattleResource[] resources)
     {
-        this.budget = budget;
-        zoneWidth = width;
-        zoneHeight = height;
-        battleZoneInfo = new string[width, height];
+        designUI.Init(resources);
+        currentConfig = config;
+        playersZoneInfo = new Dictionary<string, string[,]>();
 
-        designUI.Init(budget, resources);
-        GameObject placeHolderParent = new GameObject("PlaceHolders");
-        for (int x = 0; x < width; x++)
+        SetupPlayerDesign(0);
+    }
+    
+
+    private void SetupPlayerDesign(int playerIndex)
+    {
+        currentPlayerIndex = playerIndex;
+
+        currentBudget = currentConfig.Budget;
+        currentZoneWidth = currentConfig.ZoneWidth;
+        currentzoneHeight = currentConfig.ZoneHeight;
+        playersZoneInfo[players[currentPlayerIndex]] = new string[currentZoneWidth, currentzoneHeight];
+
+        designUI.SetBudgetText(currentBudget);
+        designUI.SetPlayerText(players[currentPlayerIndex]);
+
+        if (placeHoldersParent != null)
+            Destroy(placeHoldersParent);
+
+        if (tilesPlacedParent != null)
+            Destroy(tilesPlacedParent);
+
+        tilesPlacedParent = new GameObject("Tiles Placed");
+        placeHoldersParent = new GameObject("PlaceHolders");
+        for (int x = 0; x < currentZoneWidth; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < currentzoneHeight; y++)
             {
-                battleZoneInfo[x, y] = ((int)TileCode.Free).ToString();
-                Instantiate(placeHolderPrefab, Vector2.right * x + Vector2.up * y, Quaternion.identity, placeHolderParent.transform);
+                playersZoneInfo[players[currentPlayerIndex]][x, y] = ((int)TileCode.Free).ToString();
+                Instantiate(placeHolderPrefab, Vector2.right * x + Vector2.up * y, Quaternion.identity, placeHoldersParent.transform);
             }
         }
-        Camera.main.GetComponent<CameraController>().SetPositionCenter(width, height);
+        int coreX = 1;
+        int coreY = currentzoneHeight / 2;
+        playersZoneInfo[players[currentPlayerIndex]][coreX, coreY] = ((int)TileCode.Core).ToString();
+        Instantiate(corePrefab, Vector2.right * coreX + Vector2.up * coreY, Quaternion.identity, tilesPlacedParent.transform);
+        Camera.main.GetComponent<CameraController>().SetPositionCenter(currentZoneWidth, currentzoneHeight);
     }
 
     public void TryPlacement(TileCode tileCode, int cost, Sprite icon, Vector3 position)
@@ -74,21 +104,35 @@ public class DesignManager : MonoBehaviour
         int x = Mathf.FloorToInt(position.x);
         int y = Mathf.CeilToInt(position.y);
 
-        if (x < 0 || x >= zoneWidth || y < 0 || y >= zoneHeight) return;
+        if (x < 0 || x >= currentZoneWidth || y < 0 || y >= currentzoneHeight) return;
 
         //check existing position is empty
-        if (int.Parse(battleZoneInfo[x, y]) != (int)TileCode.Free) return;
+        if (int.Parse(playersZoneInfo[players[currentPlayerIndex]][x, y]) != (int)TileCode.Free) return;
 
         //Check budget
-        if (budget - cost < 0) return;
+        if (currentBudget - cost < 0) return;
 
-        budget -= cost;
-        designUI.SetBudgetText(budget);
-        battleZoneInfo[x, y] = ((int)tileCode).ToString();
-        
+        currentBudget -= cost;
+        designUI.SetBudgetText(currentBudget);
+        playersZoneInfo[players[currentPlayerIndex]][x, y] = ((int)tileCode).ToString();
+
         PlacementTile tile = new GameObject(tileCode.ToString()).AddComponent<PlacementTile>();
         tile.Icon = icon;
         tile.Cost = cost;
         tile.transform.position = new Vector2(x, y);
+        tile.transform.SetParent(tilesPlacedParent.transform);
+    }
+
+    public void Ready()
+    {
+        if(currentPlayerIndex == players.Length - 1)
+        {
+            //StartGame();
+        }
+        else
+        {
+            currentPlayerIndex++;
+            SetupPlayerDesign(currentPlayerIndex);
+        }
     }
 }
