@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DesignManager : MonoBehaviour
 {
@@ -127,12 +128,23 @@ public class DesignManager : MonoBehaviour
     {
         if(currentPlayerIndex == players.Length - 1)
         {
-            //StartGame();
+            SceneManager.sceneLoaded += OnBattleScene_sceneLoaded;
+            SceneManager.LoadScene("BattleScene");
         }
         else
         {
             currentPlayerIndex++;
             SetupPlayerDesign(currentPlayerIndex);
+        }
+    }
+
+    private void OnBattleScene_sceneLoaded(Scene sceneLoaded, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnBattleScene_sceneLoaded;
+
+        if(sceneLoaded.name == "BattleScene")
+        {
+            GameObject.FindObjectOfType<BattleManager>().SetUpBattle(players[0], players[1], playersZoneInfo);
         }
     }
 }
