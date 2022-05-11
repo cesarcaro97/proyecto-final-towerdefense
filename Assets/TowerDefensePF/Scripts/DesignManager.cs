@@ -43,8 +43,8 @@ public class DesignManager : MonoBehaviour
         currentBudget += cost;
         designUI.SetBudgetText(currentBudget);
 
-        int x = Mathf.FloorToInt(position.x);
-        int y = Mathf.CeilToInt(position.y);
+        int x = Mathf.RoundToInt(position.x);
+        int y = Mathf.RoundToInt(position.y);
 
         playersZoneInfo[players[currentPlayerIndex]][x, y] = ((int)TileCode.Free).ToString();
     }
@@ -102,9 +102,9 @@ public class DesignManager : MonoBehaviour
     public void TryPlacement(TileCode tileCode, int cost, Sprite icon, Vector3 position)
     {
         //Check coordinates
-        int x = Mathf.FloorToInt(position.x);
-        int y = Mathf.CeilToInt(position.y);
-
+        int x = Mathf.RoundToInt(position.x);
+        int y = Mathf.RoundToInt(position.y);
+        
         if (x < 0 || x >= currentZoneWidth || y < 0 || y >= currentzoneHeight) return;
 
         //check existing position is empty
@@ -144,7 +144,7 @@ public class DesignManager : MonoBehaviour
 
         if(sceneLoaded.name == "BattleScene")
         {
-            GameObject.FindObjectOfType<BattleManager>().SetUpBattle(players[0], players[1], playersZoneInfo);
+            GameObject.FindObjectOfType<BattleManager>().SetUpBattle(currentConfig, players[0], players[1], playersZoneInfo);
         }
     }
 }

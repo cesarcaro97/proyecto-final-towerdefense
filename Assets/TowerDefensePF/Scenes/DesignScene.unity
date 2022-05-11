@@ -4058,9 +4058,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 52053243058535327, guid: ed864f9023f698d45a56af56f418796a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 52053243058535327, guid: ed864f9023f698d45a56af56f418796a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 49
+      objectReference: {fileID: 0}
     - target: {fileID: 1852030803055212019, guid: ed864f9023f698d45a56af56f418796a, type: 3}
       propertyPath: m_Name
       value: Design Background Tiles
+      objectReference: {fileID: 0}
+    - target: {fileID: 1852030803055212019, guid: ed864f9023f698d45a56af56f418796a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7435542998268461211, guid: ed864f9023f698d45a56af56f418796a, type: 3}
       propertyPath: m_RootOrder

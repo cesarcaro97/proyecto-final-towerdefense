@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    public static BattleManager Instance { get; private set; } = null;
+
     [SerializeField] BattleLevelGenerator levelGenerator = null;
 
 
@@ -11,18 +13,34 @@ public class BattleManager : MonoBehaviour
     string[,] player1TileMap;
     string[,] player2TileMap;
     private string[,] completeTileMap;
+    GameConfig gameConfig = null;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
 
 
-    public void SetUpBattle(string player1, string player2, Dictionary<string, string[,]> playersTilesMap)
+    public void SetUpBattle(GameConfig config, string player1, string player2, Dictionary<string, string[,]> playersTilesMap)
     {
         print("Set up battle");
+        gameConfig = config;
         this.player1 = player1;
         this.player2 = player2;
         SetPlayersTilesMap(player1, player2, playersTilesMap);
 
         UnifyPlayersTilesMap(player1TileMap, player2TileMap);
         Camera.main.GetComponent<CameraController>().SetPositionCenter(completeTileMap.GetLength(0) / 2, completeTileMap.GetLength(1) / 2);
-        levelGenerator.Generate(completeTileMap);
+
+        PathFindManager.Instance.Init(player1, player2, completeTileMap);
+
+        levelGenerator.GenerateComplete(gameConfig, completeTileMap, player1, player2);
     }
 
     private void SetPlayersTilesMap(string player1, string player2, Dictionary<string, string[,]> playersTilesMap)
@@ -67,14 +85,24 @@ public class BattleManager : MonoBehaviour
         {
             while(y < height)
             {
-                print($"{x},{y}");
                 int i = x - player2TileMapWidth;
-                print($"{i},{y}");
                 completeTileMap[x, y] = player2TileMap[i, y];
                 y++;
             }
             y = 0;
             x++;
+        }
+    }
+
+    public void GameOver(string losingPlayer)
+    {
+        if(losingPlayer == player1)
+        {
+
+        }
+        else
+        {
+
         }
     }
 }

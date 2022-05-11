@@ -24,11 +24,11 @@ public class PlacementTile : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            int mX = Mathf.FloorToInt(mousePos.x);
-            int mY = Mathf.CeilToInt(mousePos.y);
+            int mX = Mathf.RoundToInt(mousePos.x);
+            int mY = Mathf.RoundToInt(mousePos.y);
 
-            int x = Mathf.FloorToInt(transform.position.x);
-            int y = Mathf.CeilToInt(transform.position.y);
+            int x = Mathf.RoundToInt(transform.position.x);
+            int y = Mathf.RoundToInt(transform.position.y);
 
             if (mX == x && mY == y)
             {

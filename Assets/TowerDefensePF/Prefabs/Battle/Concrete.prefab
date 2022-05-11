@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3490029561358689391}
   - component: {fileID: 6388976215575836408}
+  - component: {fileID: -43696033409325416}
+  - component: {fileID: -3431520225967531364}
   m_Layer: 0
   m_Name: Concrete
   m_TagString: Untagged
@@ -82,3 +84,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-43696033409325416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552941155883599180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4275ef85ff5e7428ea152f01635c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDestroyed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3431520225967531364}
+        m_TargetAssemblyTypeName: WallController, Assembly-CSharp
+        m_MethodName: OnDestroyed_EventListener
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  lifePoints: 10
+--- !u!114 &-3431520225967531364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552941155883599180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 309edd2b367060d4484821020d69d5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -22,14 +22,17 @@ public class GameConfig
     const int DEFAULT_BUDGET = 1000;
     const int DEFAULT_ZONE_WIDTH = 8;
     const int DEFAULT_ZONE_HEIGHT = 9;
+    const int DEFAULT_UNIT_SPAWN_TIME = 5;
 
     [SerializeField] int budget = DEFAULT_BUDGET;
     [SerializeField] int zoneWidth = DEFAULT_ZONE_WIDTH;
     [SerializeField] int zoneHeight = DEFAULT_ZONE_HEIGHT;
+    [SerializeField] int unitSpawnTime = DEFAULT_UNIT_SPAWN_TIME;
 
     public int ZoneWidth => zoneWidth;
     public int ZoneHeight => zoneHeight;
     public int Budget => budget;
+    public int UnitSpawnTime => unitSpawnTime;
 
     private static GameConfig LoadFromFile()
     {

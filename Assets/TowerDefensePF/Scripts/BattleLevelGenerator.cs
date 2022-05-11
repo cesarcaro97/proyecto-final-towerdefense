@@ -39,34 +39,50 @@ public class BattleLevelGenerator : MonoBehaviour
         };
     }
 
-    public void Generate(string[,] tileMap)
+    public void GenerateComplete(GameConfig config, string[,] tileMap, string player1, string player2)
     {
         int width = tileMap.GetLength(0);
         int height = tileMap.GetLength(1);
 
         GameObject tilesParent = new GameObject("Battlefield");
-        
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                string tileCode = tileMap[x, y];
+                string forPlayer = x < width / 2 ? player1 : player2;
+                string ownTag = forPlayer == player1 ? "Player1Unit" : "Player2Unit";
+                string enemyTag = forPlayer == player1 ? "Player2Unit" : "Player1Unit";
+
+                TileCode tileCode = (TileCode)int.Parse(tileMap[x, y]);
                 Vector2 pos = Vector2.right * x + Vector2.up * y;
-                if (tileCode != ((int)TileCode.Free).ToString())
+                if (tileCode != TileCode.Free)
                 {
-                    GameObject prefab = tilesPrefabByCode[tileCode];
+                    GameObject prefab = tilesPrefabByCode[((int)tileCode).ToString()];
                     
-                    if (tileCode == ((int)TileCode.Unit_Soldier_A).ToString() ||
-                        tileCode == ((int)TileCode.Unit_Soldier_D).ToString() ||
-                        tileCode == ((int)TileCode.Unit_Hero).ToString())
+                    if (tileCode == TileCode.Unit_Soldier_A ||
+                        tileCode == TileCode.Unit_Soldier_D ||
+                        tileCode == TileCode.Unit_Hero)
                     {
                         UnitSpawner spawner = new GameObject("Unit Spawner").AddComponent<UnitSpawner>();
+                        spawner.unitSpawnTime = config.UnitSpawnTime;
                         spawner.transform.position = pos;
+                        spawner.forPlayer = x < width / 2 ? player1 : player2;
+                        spawner.unitTag = ownTag;
                         spawner.prefab = prefab;
+                    }
+                    else if(tileCode == TileCode.Turret_T1 || tileCode == TileCode.Turret_T2)
+                    {
+                        TurretController turret = Instantiate(prefab, pos, Quaternion.identity).GetComponent<TurretController>();
+                        turret.tag = ownTag;
+                        turret.enemyTag = enemyTag;
                     }
                     else
                     {
-                        Instantiate(prefab, pos, Quaternion.identity, tilesParent.transform);
+                        //Walls y Core
+                        IDestroyable d = Instantiate(prefab, pos, Quaternion.identity, tilesParent.transform).GetComponent<IDestroyable>();
+                        d.GameObject.tag = ownTag;
+                        d.ForPlayer = forPlayer;
                     }
                 }
                 Instantiate(placeHolderPrefab, pos, Quaternion.identity, tilesParent.transform);
