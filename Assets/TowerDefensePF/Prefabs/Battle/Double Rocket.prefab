@@ -174,8 +174,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7058425803396327043}
   - component: {fileID: 6199011067726072186}
-  - component: {fileID: 610104430320556574}
-  - component: {fileID: 7484297873010274313}
+  - component: {fileID: 1190301380544024384}
+  - component: {fileID: 7994345712656785731}
+  - component: {fileID: 6424903767690695990}
   m_Layer: 0
   m_Name: Double Rocket
   m_TagString: Untagged
@@ -212,7 +213,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
---- !u!58 &610104430320556574
+  enemyTag: 
+--- !u!50 &1190301380544024384
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8992211398943305954}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &7994345712656785731
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,10 +248,10 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.25, y: 0.06}
+  m_Offset: {x: 0.25, y: 0}
   serializedVersion: 2
-  m_Radius: 0.08
---- !u!58 &7484297873010274313
+  m_Radius: 0.07
+--- !u!58 &6424903767690695990
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,6 +264,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.25, y: 0.06}
+  m_Offset: {x: -0.25, y: 0}
   serializedVersion: 2
-  m_Radius: 0.08
+  m_Radius: 0.07

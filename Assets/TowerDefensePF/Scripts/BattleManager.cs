@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
@@ -15,10 +16,18 @@ public class BattleManager : MonoBehaviour
     private string[,] completeTileMap;
     GameConfig gameConfig = null;
 
+    string winner = null;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 30;
     }
 
     private void OnDestroy()
@@ -36,11 +45,11 @@ public class BattleManager : MonoBehaviour
         SetPlayersTilesMap(player1, player2, playersTilesMap);
 
         UnifyPlayersTilesMap(player1TileMap, player2TileMap);
-        Camera.main.GetComponent<CameraController>().SetPositionCenter(completeTileMap.GetLength(0) / 2, completeTileMap.GetLength(1) / 2);
 
         PathFindManager.Instance.Init(player1, player2, completeTileMap);
 
         levelGenerator.GenerateComplete(gameConfig, completeTileMap, player1, player2);
+        Camera.main.GetComponent<CameraController>().SetPositionCenter(completeTileMap.GetLength(0) , completeTileMap.GetLength(1) );
     }
 
     private void SetPlayersTilesMap(string player1, string player2, Dictionary<string, string[,]> playersTilesMap)
@@ -96,13 +105,18 @@ public class BattleManager : MonoBehaviour
 
     public void GameOver(string losingPlayer)
     {
-        if(losingPlayer == player1)
-        {
+        winner = losingPlayer == player1 ? player2 : player1;
+        
+        SceneManager.sceneLoaded += OnGameOverScene_SceneLoaded;
+        SceneManager.LoadScene("GameOverScene");
+    }
 
-        }
-        else
+    private void OnGameOverScene_SceneLoaded(Scene scene, LoadSceneMode mode)
+    { 
+        if(scene.name == "GameOverScene")
         {
-
+            SceneManager.sceneLoaded -= OnGameOverScene_SceneLoaded;
+            GameOverUIManager.Instance.SetWinner(winner);
         }
     }
 }

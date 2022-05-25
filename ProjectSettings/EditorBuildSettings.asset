@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TowerDefensePF/Scenes/BattleScene.unity
     guid: 14bb9033df644614c8f214d67ee880ad
+  - enabled: 1
+    path: Assets/TowerDefensePF/Scenes/GameOverScene.unity
+    guid: 4a9f9ba69e0fb4a44a66921531817dc6
   m_configObjects: {}

@@ -45,6 +45,26 @@ namespace PathFinding
             nodes = new Node[gridSizeX, gridSizeY];
         }
 
+        public void UpdateGrid(bool[,] walkable_tiles)
+        {
+            // check if need to re-create grid
+            if (nodes == null ||
+                gridSizeX != walkable_tiles.GetLength(0) ||
+                gridSizeY != walkable_tiles.GetLength(1))
+            {
+                CreateNodes(walkable_tiles.GetLength(0), walkable_tiles.GetLength(1));
+            }
+
+            // update grid
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                for (int y = 0; y < gridSizeY; y++)
+                {
+                    nodes[x, y].Update(walkable_tiles[x, y] ? 1.0f : 0.0f, x, y);
+                }
+            }
+        }
+
         /// <summary>
         /// Get all the neighbors of a given tile in the grid.
         /// </summary>

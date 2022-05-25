@@ -39,7 +39,8 @@ public enum BattleResourceType : byte
 {
     Unit = 0,
     Turret = 1,
-    Wall = 2
+    Wall = 2,
+    Core = 3
 }
 
 [Serializable]

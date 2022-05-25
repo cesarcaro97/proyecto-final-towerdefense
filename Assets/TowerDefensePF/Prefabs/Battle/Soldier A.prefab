@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4066852927012605138}
   - component: {fileID: 685523758308067830}
   - component: {fileID: 452922680680443404}
-  - component: {fileID: -3751567148000965063}
   - component: {fileID: 1315540583615092009}
   - component: {fileID: -463614180940473803}
+  - component: {fileID: -18912277559768188}
+  - component: {fileID: -5348665528973463863}
   m_Layer: 0
   m_Name: Soldier A
   m_TagString: Untagged
@@ -107,22 +108,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &-3751567148000965063
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4860216110786484956}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &1315540583615092009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,8 +120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a93cff6ff2e62e46939d735b733bdd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 1
   speed: 2
+  shootDistance: 1.25
   mySpanwer: {fileID: 0}
+  player: 
+  enemyTag: 
 --- !u!114 &-463614180940473803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,3 +154,36 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   lifePoints: 30
+--- !u!114 &-18912277559768188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4860216110786484956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b088e58f318580e42abc153085bac4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  bulletPrefab: {fileID: 7176478194280480553, guid: 6bd4d54a3637f404787b4a965dfcc287, type: 3}
+  coolDownTime: 1
+  autoDestructTime: 1
+  enemyTag: 
+--- !u!58 &-5348665528973463863
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4860216110786484956}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.22

@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2879286979373869317}
   - component: {fileID: 3478017972998332797}
   - component: {fileID: 2961551079090900744}
-  - component: {fileID: -896077286222961400}
   - component: {fileID: 8703037238175707180}
   - component: {fileID: -2347924301501276426}
+  - component: {fileID: 4737770161924430703}
+  - component: {fileID: -8594831385373552730}
   m_Layer: 0
   m_Name: Soldier D
   m_TagString: Untagged
@@ -107,22 +108,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &-896077286222961400
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8821489440113636044}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &8703037238175707180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,8 +120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a93cff6ff2e62e46939d735b733bdd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  unitType: 2
+  speed: 1.5
+  shootDistance: 1.25
   mySpanwer: {fileID: 0}
+  player: 
+  enemyTag: 
 --- !u!114 &-2347924301501276426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,3 +154,36 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   lifePoints: 10
+--- !u!114 &4737770161924430703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821489440113636044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b088e58f318580e42abc153085bac4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  bulletPrefab: {fileID: 7176478194280480553, guid: 6bd4d54a3637f404787b4a965dfcc287, type: 3}
+  coolDownTime: 1
+  autoDestructTime: 1
+  enemyTag: 
+--- !u!58 &-8594831385373552730
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8821489440113636044}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.22

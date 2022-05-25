@@ -11,6 +11,8 @@ public class HealthController : MonoBehaviour
 
     public bool IsAlive => lifePoints > 0;
 
+    BulletController bullet = null;
+
     public void TakeDamage(int damage)
     {
         if (!IsAlive) return;

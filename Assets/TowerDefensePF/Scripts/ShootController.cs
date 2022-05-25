@@ -8,7 +8,9 @@ public class ShootController : MonoBehaviour
     [SerializeField] int damage = 10;
     [SerializeField] BulletController bulletPrefab = null;
     [SerializeField] float coolDownTime = 2;
+    [SerializeField] float autoDestructTime = 1;
 
+    public string enemyTag = string.Empty;
     float lastShot = 0;
 
     private void Start()
@@ -16,23 +18,25 @@ public class ShootController : MonoBehaviour
         lastShot = Time.time - coolDownTime;
     }
 
-    public void TryShoot(Transform target)
+    public void TryShoot(Vector2 targetPos, Action OnTargetKilled = null)
     {
         if (Time.time - lastShot >= coolDownTime)
         {
             lastShot = Time.time;
-            Shoot(target);
+            Shoot(targetPos);
         }
+
     }
 
-    private void Shoot(Transform target)
+    private void Shoot(Vector3 targetPos)
     {
-        Vector2 targetDir = target.position - transform.position;
+        Vector3 targetDir = targetPos - transform.position;
         var targetRot = Quaternion.FromToRotation(Vector3.up, targetDir);
 
         BulletController b = Instantiate(bulletPrefab, transform.position, targetRot);
+        b.enemyTag = enemyTag;
         b.damage = damage;
-        b.SetTarget(target);
-        Destroy(b.gameObject, 1);
+        b.SetTarget(targetPos, enemyTag);
+        Destroy(b.gameObject, autoDestructTime);
     }
 }

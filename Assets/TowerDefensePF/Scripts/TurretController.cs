@@ -10,6 +10,9 @@ public class TurretController : MonoBehaviour
     ShootController shootController = null;
     Transform target = null;
     List<Transform> inRange = new List<Transform>();
+    [SerializeField] float shootDistance = 0.5f;
+
+    bool unRegistered = false;
 
     private void Awake()
     {
@@ -18,46 +21,66 @@ public class TurretController : MonoBehaviour
 
     private void Update()
     {
+        inRange = Physics2D.OverlapCircleAll(transform.position, shootDistance).Select(x => x.transform).Where(x => x.tag == enemyTag).ToList();
+
+        if(target == null)
+        {
+            if(inRange.Count > 0)
+                target = inRange[0];
+        }
+        else
+        {
+            if(!inRange.Contains(target))
+            {
+                if(inRange.Count > 0)
+                    target = inRange[0];
+            }
+        }
+
         if (target == null) return;
 
         Vector2 targetDir = target.position - transform.position;
         var targetRot = Quaternion.FromToRotation(Vector3.up, targetDir);
         transform.rotation = targetRot;
-        shootController.TryShoot(target);
+        shootController.enemyTag = enemyTag;
+        shootController.TryShoot(target.position);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnDrawGizmos()
     {
-        if (collision.transform.root.tag != enemyTag) return;
-        
-        inRange.Add(collision.transform.root);
-        
-        if(target == null)
-            target = collision.transform.root;
+        Gizmos.DrawWireSphere(transform.position, shootDistance);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.root.tag != enemyTag) return;
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.transform.root.tag != enemyTag) return;
 
-        inRange.Remove(collision.transform.root);
+    //    inRange.Add(collision.transform.root);
 
-        if (collision.transform.root != target) return;
+    //    if(target == null)
+    //        target = collision.transform.root;
+    //}
 
-        target = null;
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.transform.root.tag != enemyTag) return;
 
-        if (inRange.Count > 0)
-            target = inRange[0];
+    //    inRange.Remove(collision.transform.root);
 
-    }
+    //    if (collision.transform.root != target) return;
+
+    //    target = null;
+
+    //    if (inRange.Count > 0)
+    //        target = inRange[0];
+
+    //}
 
     public void UnregisterFromBattleMap()
     {
-        var p = PathFindManager.Instance.turretsByPlayer[forPlayer].Where(p => p.x == (int)transform.position.x && p.y == (int)transform.position.y).FirstOrDefault();
+        if (unRegistered) return;
 
-        if (p != default)
-        {
-            PathFindManager.Instance.turretsByPlayer[forPlayer].Remove(p);
-        }
+        unRegistered = true;
+        PathFindManager.Instance.UnregisterPlayerResource(forPlayer, transform, BattleResourceType.Turret);
     }
 }

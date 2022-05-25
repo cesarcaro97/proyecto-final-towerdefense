@@ -5,18 +5,16 @@ using UnityEngine;
 
 public class WallController : MonoBehaviour, IDestroyable
 {
-    
     public string ForPlayer { get; set; }
+    bool unRegistered = false;
 
     public GameObject GameObject => gameObject;
 
     public void OnDestroyed_EventListener()
     {
-        var p = PathFindManager.Instance.wallsByPlayer[ForPlayer].Where(p => p.x == (int)transform.position.x && p.y == (int)transform.position.y).FirstOrDefault();
+        if (unRegistered) return;
+        unRegistered = true;
 
-        if (p != default)
-        {
-            PathFindManager.Instance.wallsByPlayer[ForPlayer].Remove(p);
-        }
+        PathFindManager.Instance.UnregisterPlayerResource(ForPlayer, transform, BattleResourceType.Wall);
     }
 }
